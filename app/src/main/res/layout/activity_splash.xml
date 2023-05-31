@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:background="#ffffff"
+        tools:context=".SplashActivity">
+
+        <TextView
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:layout_marginBottom="50dp"
+            android:text="BALLDONTLIE"
+            android:typeface="serif"
+            android:fontFamily="arial"
+            android:textColor="#F20F4B"
+            android:layout_gravity="center_horizontal"
+            android:textSize="50sp"
+            android:textStyle="bold"
+            />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/power"
+            android:layout_marginTop="-60dp"
+            android:gravity="center_horizontal"
+            android:padding="6dp"
+            android:text="NBALEAGUE"
+            android:textColor="@android:color/holo_blue_dark"
+            android:textSize="35sp"
+            android:textStyle="bold" />
+
+        <ImageView
+
+            android:layout_width="320dp"
+            android:layout_height="353dp"
+            android:layout_marginLeft="55dp"
+            android:layout_marginTop="60dp"
+            android:padding="70dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/minhabola" />
+
+        <ProgressBar
+            android:id="@+id/power"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="234dp"
+            android:layout_height="35dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="30dp"
+            android:layout_marginBottom="@dimen/cardview_default_radius"
+            android:indeterminate="true"
+            android:indeterminateTint="#F20F4B"
+            android:max="100"
+            android:progress="0" />
+
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
