@@ -18,7 +18,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void Pass1(View v) {
-        Intent intent1 = new Intent(MainActivity.this, PlayerActivity.class);
+        Intent intent1 = new Intent(MainActivity.this, SearchPlayerActivity.class);
         startActivity(intent1);
     }
 

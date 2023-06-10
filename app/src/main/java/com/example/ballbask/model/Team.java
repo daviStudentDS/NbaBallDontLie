@@ -1,15 +1,30 @@
 package com.example.ballbask.model;
 
 public class Team {
-    public int id;
-    public String nomeCompleto;
-    public String cidade;
-    public String conferencia;
+    private int id;
+    private String fullName;
+    private String city;
+    private String conference;
 
-    public Team(int id, String nomeCompleto, String cidade, String conferencia){
+    public Team(int id, String fullName, String city, String conference) {
         this.id = id;
-        this.nomeCompleto = nomeCompleto;
-        this.cidade = cidade;
-        this.conferencia = conferencia;
+        this.fullName = fullName;
+        this.city = city;
+        this.conference = conference;
+    }
+
+    public int getId() {
+        return id;
+    }
+    public String getFullName() {
+        return fullName;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public String getConference() {
+        return conference;
     }
 }

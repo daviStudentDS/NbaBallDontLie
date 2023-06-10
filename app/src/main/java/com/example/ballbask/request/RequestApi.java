@@ -64,16 +64,16 @@ public class RequestApi {
         InputStream inputStream = connection.getInputStream();
         BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
         StringBuilder builder = new StringBuilder(); // StringBuilder: Determina o padrão strings e seus valores em java, para otimizar sua memória e determinar um valor único para a string sem comprometer o espaço da memória.
-        String buffer; // Coloca o Reader no Builder
+        String line; // Coloca o Reader no Builder
 
-        while ((buffer = reader.readLine()) != null) {
-            builder.append(buffer);
+        while ((line = reader.readLine()) != null) {
+            builder.append(line);
+            builder.append("\n");
         }
 
-        String response = builder.toString(); // Depois de construir a resposta ele coloca dentro da response
-
         reader.close();
+        inputStream.close();
 
-        return new JSONObject(response); // retorno da string em JSON => instanciando a resposta
+        return new JSONObject(builder.toString());
     }
 }

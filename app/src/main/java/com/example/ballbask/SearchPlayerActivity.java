@@ -1,7 +1,6 @@
 package com.example.ballbask;
 
 import androidx.appcompat.app.AppCompatActivity;
-
 import android.os.Bundle;
 
 public class SearchPlayerActivity extends AppCompatActivity {
