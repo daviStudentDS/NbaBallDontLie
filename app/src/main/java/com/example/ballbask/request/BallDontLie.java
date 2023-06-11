@@ -1,5 +1,6 @@
 package com.example.ballbask.request;
 
+import com.example.ballbask.model.Player;
 import com.example.ballbask.model.Team;
 
 import org.json.JSONArray;
@@ -45,4 +46,25 @@ public class BallDontLie {
 
         return teams;
     }
+
+    public static List<Player> searchPlayers(String playerName) throws Exception {
+        JSONArray response = RequestApi.get(BASE_URL + "players?search=" + playerName).getJSONArray("data");
+        List<Player> players = new ArrayList<>();
+
+        for (int i = 0; i < response.length(); i++) {
+            JSONObject playerJSON = response.getJSONObject(i);
+            int id = playerJSON.getInt("id");
+            String firstName = playerJSON.getString("first_name");
+            String lastName = playerJSON.getString("last_name");
+            String position = playerJSON.getString("position");
+            int teamId = playerJSON.getInt("team_id");
+            Player player = new Player(id, firstName, lastName, position, teamId);
+            players.add(player);
+        }
+
+        return players;
+    }
 }
+
+
+
