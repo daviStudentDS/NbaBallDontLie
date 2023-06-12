@@ -48,6 +48,7 @@ public class BallDontLie {
     }
 
     public static List<Player> searchPlayers(String playerName) throws Exception {
+        playerName = "Anthony Davis";
         JSONArray response = RequestApi.get(BASE_URL + "players?search=" + playerName).getJSONArray("data");
         List<Player> players = new ArrayList<>();
 

@@ -2,6 +2,7 @@ package com.example.ballbask;
 
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -28,6 +29,8 @@ public class SearchPlayerActivity extends AppCompatActivity implements LoaderMan
     private static final int LOADER_ID = 1;
     private LoaderManager.LoaderCallbacks<PlayerExibir> loaderCallbacks;
 
+    private static final String TAG = SearchPlayerActivity.class.getSimpleName();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,9 +54,9 @@ public class SearchPlayerActivity extends AppCompatActivity implements LoaderMan
                 } else {
                     Toast.makeText(SearchPlayerActivity.this, "Digite o nome do jogador", Toast.LENGTH_SHORT).show();
                 }
-
             }
         });
+
     }
 
     private void performPlayerSearch(String playerName) {
@@ -75,8 +78,12 @@ public class SearchPlayerActivity extends AppCompatActivity implements LoaderMan
 
     @Override
     public Loader<PlayerExibir> onCreateLoader(int id, Bundle args) {
-        String firstName = args.getString("first_Name");
-        String lastName = args.getString("last_Name");
+        String firstName = args.getString("firstName");
+        String lastName = args.getString("lastName");
+
+
+        Log.d(TAG, "onCreateLoader: firstName = " + firstName +  "lastName = " + lastName);
+
         return new PlayerLoader(this, firstName, lastName);
     }
 
@@ -115,9 +122,9 @@ public class SearchPlayerActivity extends AppCompatActivity implements LoaderMan
     }
 
     private void setPlayerData(Player player) {
-        String fullName = player.getFirstName() + " " + player.getLastName();
+        String playerName = player.getFirstName() + " " + player.getLastName();
 
-        textViewPlayerName.setText(fullName);
+        textViewPlayerName.setText(playerName);
         textViewTeamName.setText(player.getTeamId());
         textViewPosition.setText(player.getPosition());
     }

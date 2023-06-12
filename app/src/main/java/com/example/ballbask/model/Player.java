@@ -27,10 +27,6 @@ public class Player {
         return lastName;
     }
 
-    public String getFullName() {
-        return firstName + " " + lastName;
-    }
-
     public String getPosition() {
         return position;
     }
