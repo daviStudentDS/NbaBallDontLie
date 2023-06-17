@@ -8,7 +8,7 @@ public class History {
     private String teamCity;
     private String teamConference;
 
-    public History() {
+    public History(String teamName, String description) {
         this.id = 0;
         this.teamFullName = "";
         this.teamCity = "";
@@ -48,5 +48,13 @@ public class History {
 
     public void setTeamConference(String teamConference) {
         this.teamConference = teamConference;
+    }
+
+    public int getTeamName() {
+        return getTeamName();
+    }
+
+    public String getDescription() {
+        return getDescription();
     }
 }

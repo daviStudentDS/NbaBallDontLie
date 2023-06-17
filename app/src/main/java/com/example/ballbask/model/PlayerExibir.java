@@ -5,6 +5,7 @@ import java.util.List;
 
 public class PlayerExibir {
     private List<Player> jogadores;
+    private Player jogador;
     private String mensagemErro;
 
     public boolean possuiErro() {
@@ -19,7 +20,19 @@ public class PlayerExibir {
         this.jogadores = jogadores != null ? new ArrayList<>(jogadores) : new ArrayList<>();
     }
 
+    public void setJogador(Player player) {
+        this.jogador = player;
+    }
+
+
+    public String getMensagemErro(){
+        return mensagemErro;
+    }
     public List<Player> getJogadores() {
         return new ArrayList<>(jogadores);
+    }
+
+    public Player getPlayer(){
+        return this.jogador;
     }
 }

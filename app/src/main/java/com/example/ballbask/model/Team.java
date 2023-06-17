@@ -28,4 +28,7 @@ public class Team {
         return conference;
     }
 
+    public String getDescription() {
+        return getDescription();
+    }
 }

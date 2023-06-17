@@ -18,9 +18,10 @@ import com.example.ballbask.model.Player;
 import com.example.ballbask.model.PlayerExibir;
 
 import java.util.List;
+import java.util.Optional;
 
 public class SearchPlayerActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<PlayerExibir> {
-    private EditText editTextPlayerName;
+    private EditText editTextPlayerId;
     private Button buttonSearch;
     private TextView textViewPlayerName;
     private TextView textViewTeamName;
@@ -36,7 +37,7 @@ public class SearchPlayerActivity extends AppCompatActivity implements LoaderMan
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search_player);
 
-        editTextPlayerName = findViewById(R.id.editTextPlayerName);
+        editTextPlayerId = findViewById(R.id.editTextPlayerId);
         buttonSearch = findViewById(R.id.buttonSearch);
         textViewPlayerName = findViewById(R.id.textViewPlayerName);
         textViewTeamName = findViewById(R.id.textViewTeamName);
@@ -45,67 +46,59 @@ public class SearchPlayerActivity extends AppCompatActivity implements LoaderMan
         loaderCallbacks = this;
 
         buttonSearch.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String playerName = editTextPlayerName.getText().toString().trim();
+                @Override
+                public void onClick(View v) {
+                    String playerIdText = editTextPlayerId.getText().toString().trim();
 
-                if (!TextUtils.isEmpty(playerName)) {
-                    performPlayerSearch(playerName);
-                } else {
-                    Toast.makeText(SearchPlayerActivity.this, "Digite o nome do jogador", Toast.LENGTH_SHORT).show();
+                    if (!TextUtils.isEmpty(playerIdText)) {
+                        try {
+                            int playerId = Integer.parseInt(playerIdText);
+                            performPlayerSearch(playerId);
+                        } catch (NumberFormatException e) {
+                            Toast.makeText(SearchPlayerActivity.this, "Digite um ID de jogador válido", Toast.LENGTH_SHORT).show();
+                        }
+                    } else {
+                        Toast.makeText(SearchPlayerActivity.this, "Digite o ID do jogador", Toast.LENGTH_SHORT).show();
+                    }
                 }
-            }
-        });
-
+            });
     }
 
-    private void performPlayerSearch(String playerName) {
-        String[] names = TextUtils.split(playerName, " ");
+    private void performPlayerSearch(int playerId) {
+        Bundle args = new Bundle();
+        args.putInt("playerId", playerId);
 
-        if (names.length >= 2) {
-            String firstName = names[0].trim();
-            String lastName = names[1].trim();
-
-            Bundle args = new Bundle();
-            args.putString("firstName", firstName);
-            args.putString("lastName", lastName);
-
-            LoaderManager.getInstance(this).restartLoader(LOADER_ID, args, loaderCallbacks);
-        } else {
-            Toast.makeText(SearchPlayerActivity.this, "Digite o primeiro e o segundo nome do jogador", Toast.LENGTH_SHORT).show();
-        }
+        LoaderManager.getInstance(this).restartLoader(LOADER_ID, args, loaderCallbacks);
     }
 
     @Override
     public Loader<PlayerExibir> onCreateLoader(int id, Bundle args) {
-        String firstName = args.getString("firstName");
-        String lastName = args.getString("lastName");
-
-
-        Log.d(TAG, "onCreateLoader: firstName = " + firstName +  "lastName = " + lastName);
-
-        return new PlayerLoader(this, firstName, lastName);
+        return new PlayerLoader(this, args);
     }
 
     @Override
     public void onLoadFinished(Loader<PlayerExibir> loader, PlayerExibir data) {
         if (data.possuiErro()) {
-            setPlayerNotFoundState();
+            textViewPlayerName.setText(data.getMensagemErro());
+            textViewTeamName.setText("");
+            textViewPosition.setText("");
             return;
         }
 
-        List<Player> players = data.getJogadores();
-        String playerName = editTextPlayerName.getText().toString().trim();
-        String[] names = TextUtils.split(playerName, " ");
-        String firstName = names[0].trim();
-        String lastName = names[1].trim();
-        Player searchedPlayer = findPlayerByName(players, firstName, lastName);
+        setPlayerData(data.getPlayer());
 
-        if (searchedPlayer != null) {
-            setPlayerData(searchedPlayer);
+        /*
+        List<Player> players = data.getJogadores();
+        int playerId = Integer.parseInt(editTextPlayerId.getText().toString().trim());
+
+        Optional<Player> searchPlayer = findPlayerById(players, playerId);
+
+        if (searchPlayer.isPresent()) {
+            setPlayerData(searchPlayer.get());
         } else {
             setPlayerNotFoundState();
         }
+         */
     }
 
     @Override
@@ -123,20 +116,20 @@ public class SearchPlayerActivity extends AppCompatActivity implements LoaderMan
 
     private void setPlayerData(Player player) {
         String playerName = player.getFirstName() + " " + player.getLastName();
+        String teamId = String.valueOf(player.getTeamId());
 
         textViewPlayerName.setText(playerName);
-        textViewTeamName.setText(player.getTeamId());
+        textViewTeamName.setText(teamId);
         textViewPosition.setText(player.getPosition());
     }
 
-    private Player findPlayerByName(List<Player> players, String firstName, String lastName) {
-        if (players != null && !players.isEmpty()) {
-            for (Player player : players) {
-                if (TextUtils.equals(player.getFirstName(), firstName) && TextUtils.equals(player.getLastName(), lastName)) {
-                    return player;
-                }
+    private Optional<Player> findPlayerById(List<Player> players, int playerId) {
+        for (Player player : players) {
+            if (player.getId() == playerId) {
+                return Optional.of(player);
             }
         }
-        return null;
+
+        return Optional.empty();
     }
 }

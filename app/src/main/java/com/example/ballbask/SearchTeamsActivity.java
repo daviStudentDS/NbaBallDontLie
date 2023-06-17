@@ -1,6 +1,7 @@
 package com.example.ballbask;
 
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -14,6 +15,8 @@ import androidx.loader.content.Loader;
 import com.example.ballbask.loader.TeamLoader;
 import com.example.ballbask.model.Team;
 import com.example.ballbask.model.TelaExibir;
+
+import com.example.ballbask.storage.DatabaseHelper;
 
 import java.util.List;
 
@@ -40,6 +43,8 @@ public class SearchTeamsActivity extends AppCompatActivity implements LoaderMana
 
         loaderCallbacks = this; // Atribuir a instância atual do LoaderCallbacks
 
+
+
         buttonSearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -59,6 +64,8 @@ public class SearchTeamsActivity extends AppCompatActivity implements LoaderMana
         args.putString("teamName", teamName);
 
         LoaderManager.getInstance(this).restartLoader(LOADER_ID, args, loaderCallbacks);
+
+
     }
 
     @Override
@@ -79,6 +86,7 @@ public class SearchTeamsActivity extends AppCompatActivity implements LoaderMana
 
         if (searchedTeam != null) {
             setTeamData(searchedTeam);
+
         } else {
             setTeamNotFoundState();
         }
@@ -114,4 +122,5 @@ public class SearchTeamsActivity extends AppCompatActivity implements LoaderMana
         }
         return null;
     }
+
 }

@@ -1,5 +1,7 @@
 package com.example.ballbask.loader;
+
 import android.content.Context;
+import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -9,11 +11,13 @@ import com.example.ballbask.model.PlayerExibir;
 import com.example.ballbask.request.BallDontLie;
 
 public class PlayerLoader extends AsyncTaskLoader<PlayerExibir> {
-    private String playerName;
 
-    public PlayerLoader(@NonNull Context context, String firstName, String lastName) {
+
+    private int playerId;
+
+    public PlayerLoader(@NonNull Context context, Bundle args) {
         super(context);
-        this.playerName = firstName + " " + lastName;
+        this.playerId = args.getInt("playerId");
     }
 
     @Nullable
@@ -22,7 +26,7 @@ public class PlayerLoader extends AsyncTaskLoader<PlayerExibir> {
         PlayerExibir playerExibir = new PlayerExibir();
 
         try {
-            playerExibir.setJogadores(BallDontLie.searchPlayers(playerName));
+            playerExibir.setJogador(BallDontLie.getPlayerById(playerId));
         } catch (Exception e) {
             playerExibir.setMensagemErro(e.getMessage());
         }
