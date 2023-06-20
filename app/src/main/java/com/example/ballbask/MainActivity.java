@@ -19,6 +19,8 @@ public class MainActivity extends AppCompatActivity {
         Button button3 = findViewById(R.id.btnHistory);
     }
 
+
+
     public void Pass1(View v) {
         Intent intent1 = new Intent(MainActivity.this, SearchPlayerActivity.class);
         startActivity(intent1);

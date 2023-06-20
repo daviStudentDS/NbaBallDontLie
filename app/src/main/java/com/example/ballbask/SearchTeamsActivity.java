@@ -1,10 +1,12 @@
 package com.example.ballbask;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -30,6 +32,10 @@ public class SearchTeamsActivity extends AppCompatActivity implements LoaderMana
     private static final int LOADER_ID = 1;
     private LoaderManager.LoaderCallbacks<TelaExibir> loaderCallbacks; // Objeto global
 
+    private DatabaseHelper databaseHelper;
+    private ListView teamsListView;
+
+    @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,11 +49,13 @@ public class SearchTeamsActivity extends AppCompatActivity implements LoaderMana
 
         loaderCallbacks = this; // Atribuir a instância atual do LoaderCallbacks
 
-
+        databaseHelper = new DatabaseHelper(this);
+        teamsListView = findViewById(R.id.listView);
 
         buttonSearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 String teamName = editTextTeamName.getText().toString().trim();
 
                 if (!teamName.isEmpty()) {
