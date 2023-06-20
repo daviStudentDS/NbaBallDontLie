@@ -15,9 +15,6 @@ public class Player {
         this.teamId = teamId;
     }
 
-    public int getId() {
-        return id;
-    }
 
     public String getFirstName() {
         return firstName;
@@ -25,10 +22,6 @@ public class Player {
 
     public String getLastName() {
         return lastName;
-    }
-
-    public String getFullName() {
-        return firstName + " " + lastName;
     }
 
     public String getPosition() {
@@ -39,8 +32,8 @@ public class Player {
         return teamId;
     }
 
-    public void setTeam(Team team) {
 
+    public int getId() {
+        return id;
     }
-
 }

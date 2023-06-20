@@ -27,4 +27,8 @@ public class Team {
     public String getConference() {
         return conference;
     }
+
+    public String getDescription() {
+        return getDescription();
+    }
 }
