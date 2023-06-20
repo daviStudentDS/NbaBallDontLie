@@ -1,6 +1,7 @@
 package com.example.ballbask;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -15,12 +16,15 @@ import androidx.loader.app.LoaderManager;
 import androidx.loader.content.Loader;
 
 import com.example.ballbask.loader.TeamLoader;
+import com.example.ballbask.model.History;
 import com.example.ballbask.model.Team;
 import com.example.ballbask.model.TelaExibir;
 
 import com.example.ballbask.storage.DatabaseHelper;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class SearchTeamsActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<TelaExibir> {
     private EditText editTextTeamName;
@@ -35,11 +39,15 @@ public class SearchTeamsActivity extends AppCompatActivity implements LoaderMana
     private DatabaseHelper databaseHelper;
     private ListView teamsListView;
 
+
     @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search_teams);
+
+
+
 
         editTextTeamName = findViewById(R.id.editTextTeamName);
         buttonSearch = findViewById(R.id.buttonSearch);
@@ -49,8 +57,6 @@ public class SearchTeamsActivity extends AppCompatActivity implements LoaderMana
 
         loaderCallbacks = this; // Atribuir a instância atual do LoaderCallbacks
 
-        databaseHelper = new DatabaseHelper(this);
-        teamsListView = findViewById(R.id.listView);
 
         buttonSearch.setOnClickListener(new View.OnClickListener() {
             @Override

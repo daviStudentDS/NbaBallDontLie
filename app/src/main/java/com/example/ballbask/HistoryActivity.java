@@ -15,6 +15,7 @@ import java.util.ArrayList;
 public class HistoryActivity extends AppCompatActivity {
     private ListView listView;
     private ArrayAdapter<String> adapter;
+    private ArrayList<String> playerFullName;
     private DatabaseSonHelper databaseHelper;
 
 
@@ -32,5 +33,11 @@ public class HistoryActivity extends AppCompatActivity {
         ArrayList<String> records = databaseHelper.getAllRecordsFromParent();
 
         adapter.addAll(records);
+
+        populateHistory();
+    }
+
+    private void populateHistory(){
+
     }
 }

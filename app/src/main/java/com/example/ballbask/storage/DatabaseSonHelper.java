@@ -11,4 +11,8 @@ public class DatabaseSonHelper extends DatabaseHelper {
     public ArrayList<String> getAllRecordsFromParent() {
         return getAllRecords();
     }
+
+    private ArrayList<String> getAllRecords(){
+        return getAllRecords();
+    }
 }

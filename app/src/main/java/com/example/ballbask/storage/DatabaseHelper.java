@@ -7,7 +7,10 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import com.example.ballbask.model.History;
+
 import java.util.ArrayList;
+import java.util.Optional;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String DATABASE_NAME = "teams.db";
@@ -60,24 +63,62 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL(SQL_CREATE_HISTORY_TABLE);
     }
 
-    public ArrayList<String> getAllRecords() {
+ /*   public ArrayList<String> getAllRecords() {
         ArrayList<String> records = new ArrayList<>();
 
         SQLiteDatabase db = getReadableDatabase();
-        Cursor cursor = db.query(TABLE_HISTORY, null, null, null, null, null, null);
-
-        if (cursor.moveToFirst()) {
-            do {
-                @SuppressLint("Range") String record = cursor.getString(cursor.getColumnIndex(COLUMN_TEAM_ID_FK));
-                records.add(record);
-            } while (cursor.moveToNext());
-        }
+        String query = String.format("SELECT * FROM %s ORDER BY %s DESC", DatabaseHelper.TABLE_HISTORY, DatabaseHelper.COLUMN_HISTORY_ID);
+      //  Cursor cursor = db.query(TABLE_HISTORY, null, null, null, null, null, null);
+        Cursor cursor = db.rawQuery(query, null);
+        cursor.moveToFirst();
 
         cursor.close();
         db.close();
 
         return records;
     }
+
+  */
+
+    public Optional<ArrayList<History>> getAllHistoryItens(){
+        ArrayList<History> histories = new ArrayList<>();
+
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        String query = String.format("SELECT * FROM %s ORDER BY %s DESC", DatabaseHelper.TABLE_HISTORY, DatabaseHelper.COLUMN_HISTORY_ID);
+
+        // Runs the query.
+        Cursor cursor = db.rawQuery(query, null);
+        cursor.moveToFirst();
+
+        while(!cursor.isAfterLast()){
+            History history = new History();
+            int index;
+
+            // index = cursor.getColumnIndex(DB.COLUMN_HISTORY_ID);
+
+            // MoneyFrom Field.
+            index = cursor.getColumnIndex(DatabaseHelper.COLUMN_HISTORY_ID);
+            history.id = cursor.getInt(index);
+
+            // MoneyTo Field.
+            index = cursor.getColumnIndex(DatabaseSonHelper.COLUMN_TEAM_NAME);
+            history.TeamName = cursor.getString(index);
+
+            histories.add(history);
+            cursor.moveToNext();
+        }
+
+        cursor.close();
+
+        if(histories.size() == 0){
+            Optional.empty();
+        }
+
+        return Optional.of(histories);
+    }
+
+
 
 
     @Override
