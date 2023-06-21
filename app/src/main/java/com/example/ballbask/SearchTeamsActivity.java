@@ -32,7 +32,7 @@ public class SearchTeamsActivity extends AppCompatActivity implements LoaderMana
     private TextView textViewTeamName;
     private TextView textViewCidade;
     private TextView textViewConferencia;
-
+    private DatabaseHelper db;
     private static final int LOADER_ID = 1;
     private LoaderManager.LoaderCallbacks<TelaExibir> loaderCallbacks; // Objeto global
 
@@ -46,9 +46,6 @@ public class SearchTeamsActivity extends AppCompatActivity implements LoaderMana
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search_teams);
 
-
-
-
         editTextTeamName = findViewById(R.id.editTextTeamName);
         buttonSearch = findViewById(R.id.buttonSearch);
         textViewTeamName = findViewById(R.id.textViewTeamName);
@@ -56,7 +53,6 @@ public class SearchTeamsActivity extends AppCompatActivity implements LoaderMana
         textViewConferencia = findViewById(R.id.textViewConferencia);
 
         loaderCallbacks = this; // Atribuir a instância atual do LoaderCallbacks
-
 
         buttonSearch.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -71,6 +67,8 @@ public class SearchTeamsActivity extends AppCompatActivity implements LoaderMana
                 }
             }
         });
+
+        db = new DatabaseHelper(this);
     }
 
     private void performTeamSearch(String teamName) {
@@ -78,8 +76,6 @@ public class SearchTeamsActivity extends AppCompatActivity implements LoaderMana
         args.putString("teamName", teamName);
 
         LoaderManager.getInstance(this).restartLoader(LOADER_ID, args, loaderCallbacks);
-
-
     }
 
     @Override
@@ -98,12 +94,13 @@ public class SearchTeamsActivity extends AppCompatActivity implements LoaderMana
         String teamName = editTextTeamName.getText().toString().trim();
         Team searchedTeam = findTeamByName(teams, teamName);
 
-        if (searchedTeam != null) {
-            setTeamData(searchedTeam);
-
-        } else {
+        if (searchedTeam == null) {
             setTeamNotFoundState();
         }
+
+        setTeamData(searchedTeam);
+
+        db.addPlayerHistory(searchedTeam.getFullName());
     }
 
     @Override

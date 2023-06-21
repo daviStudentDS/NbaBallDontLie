@@ -1,14 +1,14 @@
 package com.example.ballbask;
-
 import android.annotation.SuppressLint;
-import android.content.Intent;
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
-
-import com.example.ballbask.storage.DatabaseSonHelper;
 
 import java.util.ArrayList;
 
@@ -16,8 +16,6 @@ public class HistoryActivity extends AppCompatActivity {
     private ListView listView;
     private ArrayAdapter<String> adapter;
     private ArrayList<String> playerFullName;
-    private DatabaseSonHelper databaseHelper;
-
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -26,18 +24,20 @@ public class HistoryActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         listView = findViewById(R.id.listView);
-        adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1);
+        adapter = new ArrayAdapter<>(this, R.layout.activity_history, R.id.textView, playerFullName);
         listView.setAdapter(adapter);
-
-        databaseHelper = new DatabaseSonHelper(this);
-        ArrayList<String> records = databaseHelper.getAllRecordsFromParent();
-
-        adapter.addAll(records);
 
         populateHistory();
     }
 
-    private void populateHistory(){
+    private void populateHistory() {
+        // Simulating the history data
+        ArrayList<String> records = new ArrayList<>();
+        records.add("History 1");
+        records.add("History 2");
+        records.add("History 3");
 
+        playerFullName = records;
+        adapter.notifyDataSetChanged();
     }
 }

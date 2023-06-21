@@ -35,57 +35,45 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String TABLE_HISTORY = "history";
     public static final String COLUMN_HISTORY_ID = "history_id";
     public static final String COLUMN_TEAM_NAME = "team_name";
-    public static final String COLUMN_TEAM_DESCRIPTION = "team_description";
-    public static final String COLUMN_TEAM_CONFERENCE_HISTORY = "team_conference";
-    public static final String COLUMN_TEAM_ID_FK = "team_id_fk";
+
+    public static final String TABLE_PLAYERHISTORY = "tb_historyplayer";
+    public static final String COLUMN_PLAYERHISTORY_ID = "id";
+    public static final String COLUMN_PLAYERHISTORY_NAME = "playername";
+
+    public static final String TABLE_TEAMHISTORY = "tb_historyplayer";
+    public static final String COLUMN_TEAMHISTORY_ID = "id";
+    public static final String COLUMN_TEAMHISTORY_NAME = "teamname";
 
     // Comando SQL para criar a tabela "history" com chave estrangeira
-    private static final String SQL_CREATE_HISTORY_TABLE =
-            "CREATE TABLE " + TABLE_HISTORY + "(" +
-                    COLUMN_HISTORY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
-                    COLUMN_TEAM_NAME + " TEXT," +
-                    COLUMN_TEAM_DESCRIPTION + " TEXT," +
-                    COLUMN_TEAM_CONFERENCE_HISTORY + " TEXT," +
-                    COLUMN_TEAM_ID_FK + " INTEGER," +
-                    "FOREIGN KEY(" + COLUMN_TEAM_ID_FK + ") REFERENCES " + TABLE_TEAMS + "(" + COLUMN_TEAM_ID + "))";
+    private static final String SQL_CREATE_PLAYERHISTORY_TABLE =
+            "CREATE TABLE " + TABLE_PLAYERHISTORY + "(" +
+                    COLUMN_PLAYERHISTORY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
+                    COLUMN_PLAYERHISTORY_NAME + " TEXT)";
+
+    private static final String SQL_CREATE_TEAMHISTORY_TABLE =
+            "CREATE TABLE " + TABLE_TEAMHISTORY + "(" +
+                    COLUMN_TEAMHISTORY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
+                    COLUMN_TEAMHISTORY_NAME + " TEXT)";
 
 
     public DatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 
-
-
     @Override
     public void onCreate(SQLiteDatabase db) {
         // Cria a tabela "teams" e "history"
-        db.execSQL(SQL_CREATE_TEAMS_TABLE);
-        db.execSQL(SQL_CREATE_HISTORY_TABLE);
+        db.execSQL(SQL_CREATE_PLAYERHISTORY_TABLE);
+        db.execSQL(SQL_CREATE_TEAMHISTORY_TABLE);
     }
 
- /*   public ArrayList<String> getAllRecords() {
-        ArrayList<String> records = new ArrayList<>();
-
-        SQLiteDatabase db = getReadableDatabase();
-        String query = String.format("SELECT * FROM %s ORDER BY %s DESC", DatabaseHelper.TABLE_HISTORY, DatabaseHelper.COLUMN_HISTORY_ID);
-      //  Cursor cursor = db.query(TABLE_HISTORY, null, null, null, null, null, null);
-        Cursor cursor = db.rawQuery(query, null);
-        cursor.moveToFirst();
-
-        cursor.close();
-        db.close();
-
-        return records;
-    }
-
-  */
-
-    public Optional<ArrayList<History>> getAllHistoryItens(){
+    public Optional<ArrayList<History>> getAllPlayersHistory(){
         ArrayList<History> histories = new ArrayList<>();
 
         SQLiteDatabase db = this.getReadableDatabase();
 
-        String query = String.format("SELECT * FROM %s ORDER BY %s DESC", DatabaseHelper.TABLE_HISTORY, DatabaseHelper.COLUMN_HISTORY_ID);
+        String query = String.format("SELECT * FROM %s ORDER BY %s DESC",
+                DatabaseHelper.TABLE_PLAYERHISTORY, DatabaseHelper.COLUMN_PLAYERHISTORY_ID);
 
         // Runs the query.
         Cursor cursor = db.rawQuery(query, null);
@@ -102,7 +90,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             history.id = cursor.getInt(index);
 
             // MoneyTo Field.
-            index = cursor.getColumnIndex(DatabaseSonHelper.COLUMN_TEAM_NAME);
+            index = cursor.getColumnIndex(DatabaseHelper.COLUMN_TEAM_NAME);
             history.TeamName = cursor.getString(index);
 
             histories.add(history);
@@ -118,15 +106,25 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return Optional.of(histories);
     }
 
+    public boolean addPlayerHistory(String fullname){
+        SQLiteDatabase db = this.getReadableDatabase();
 
+        ContentValues content = new ContentValues();
+
+        content.put(COLUMN_PLAYERHISTORY_NAME, fullname);
+
+        boolean success = db.insert(TABLE_PLAYERHISTORY, null, content) > 0;
+
+        return success;
+    }
 
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         // Caso haja uma atualização do banco de dados, você pode implementar aqui a lógica para migrar os dados existentes
         // OU SÓ EXCLUIR
-        db.execSQL("DROP TABLE IF EXISTS " + TABLE_HISTORY);
-        db.execSQL("DROP TABLE IF EXISTS " + TABLE_TEAMS);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_TEAMHISTORY);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_PLAYERHISTORY);
         onCreate(db);
     }
 
