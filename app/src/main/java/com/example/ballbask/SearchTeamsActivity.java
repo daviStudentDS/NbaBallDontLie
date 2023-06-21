@@ -54,6 +54,17 @@ public class SearchTeamsActivity extends AppCompatActivity implements LoaderMana
 
         loaderCallbacks = this; // Atribuir a instância atual do LoaderCallbacks
 
+        String teamName = String.valueOf(teamsListView); // Substitua por seu valor real
+
+        DatabaseHelper databaseHelper = new DatabaseHelper(this);
+        boolean success = databaseHelper.addTeamHistory(teamName);
+
+        if (success) {
+            // A pesquisa do time foi adicionada ao histórico com sucesso
+        } else {
+            // Ocorreu um erro ao adicionar a pesquisa do time ao histórico
+        }
+
         buttonSearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -100,7 +111,7 @@ public class SearchTeamsActivity extends AppCompatActivity implements LoaderMana
 
         setTeamData(searchedTeam);
 
-        db.addPlayerHistory(searchedTeam.getFullName());
+        db.addTeamHistory(searchedTeam.getFullName());
     }
 
     @Override

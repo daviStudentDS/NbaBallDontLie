@@ -1,43 +1,45 @@
 package com.example.ballbask;
-import android.annotation.SuppressLint;
+
 import android.os.Bundle;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.ballbask.model.History;
+import com.example.ballbask.storage.DatabaseHelper;
+
 import java.util.ArrayList;
+import java.util.Optional;
 
 public class HistoryActivity extends AppCompatActivity {
     private ListView listView;
     private ArrayAdapter<String> adapter;
-    private ArrayList<String> playerFullName;
+    private ArrayList<History> teamHistory;
+    private DatabaseHelper databaseHelper;
 
-    @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_history);
 
         listView = findViewById(R.id.listView);
-        adapter = new ArrayAdapter<>(this, R.layout.activity_history, R.id.textView, playerFullName);
+        teamHistory = new ArrayList<History>();
+        String[] teamName = new String[0];
+        adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, teamName);
         listView.setAdapter(adapter);
 
+        databaseHelper = new DatabaseHelper(this);
         populateHistory();
     }
 
     private void populateHistory() {
-        // Simulating the history data
-        ArrayList<String> records = new ArrayList<>();
-        records.add("History 1");
-        records.add("History 2");
-        records.add("History 3");
+        Optional<ArrayList<History>> historyOptional = databaseHelper.getAllTeamsHistory();
 
-        playerFullName = records;
-        adapter.notifyDataSetChanged();
+        if (historyOptional.isPresent()) {
+            ArrayList<History> historyList = historyOptional.get();
+            teamHistory.addAll(historyList);
+            adapter.notifyDataSetChanged();
+        }
     }
 }
