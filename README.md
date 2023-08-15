@@ -9,7 +9,8 @@
 # Modelo de Entidade e Relacionamento(MER) API que será criada:
 
 <img src="https://github.com/daviStudentDS/NbaBallDontLie/assets/101807467/630fffae-c473-4fcb-ac4c-d86e01a7032b.png"/>
-<br>
+</br>
+</br>
 <img src="https://github.com/daviStudentDS/NbaBallDontLie/assets/101807467/45c99c4e-b91c-4f91-813d-bd28470a6d0d.png"/>
 
 # Diagrama de Classes - API que será criada:
