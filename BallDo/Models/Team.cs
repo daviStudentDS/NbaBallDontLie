@@ -19,7 +19,7 @@ namespace BallDo.Models
 
         public IEnumerable<Player>? Players { get; set; }
 
-        [Required]
+        [ForeignKey("Coach")]
         public int CoachId { get; set; }
         public Coach? Coach { get; set; }
     }

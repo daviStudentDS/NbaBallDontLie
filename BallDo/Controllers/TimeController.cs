@@ -20,59 +20,22 @@ namespace BallDo.Controllers
             _context = context;
         }
 
-        [HttpGet]
-        public IActionResult GetAllTeams()
-        {
-            var teams = _context.Teams
-                .Select(t => new
-                {
-                    t.Id,
-                    t.Name,
-                    t.FoundedYear,
-                    Coach = new
-                    {
-                        t.Coach.Id,
-                        t.Coach.Name,
-                        // Adicione outras propriedades do treinador, se necessário
-                    },
-                    Players = t.Players.Select(p => new
-                    {
-                        p.Id,
-                        p.Name,
-                        p.Age,
-                        p.Position,
-                        // Adicione outras propriedades do jogador, se necessário
-                    }).ToList()
-                })
-                .ToList();
-
-            return Ok(teams);
-        }
-
         [HttpGet("{id}")]
         public IActionResult GetTeamById(int id)
         {
             var team = _context.Teams
                 .Where(t => t.Id == id)
-                .Select(t => new
+                .Select(t => new TeamDTO
                 {
-                    t.Id,
-                    t.Name,
-                    t.FoundedYear,
-                    Coach = new
+                    Id = t.Id,
+                    Name = t.Name,
+                    Coach = new CoachDTO
                     {
-                        t.Coach.Id,
-                        t.Coach.Name,
-                        // Adicione outras propriedades do treinador, se necessário
-                    },
-                    Players = t.Players.Select(p => new
-                    {
-                        p.Id,
-                        p.Name,
-                        p.Age,
-                        p.Position,
-                        // Adicione outras propriedades do jogador, se necessário
-                    }).ToList()
+                        Id = t.Coach.Id,
+                        Name = t.Coach.Name,
+                        ExperienceYears = t.Coach.ExperienceYears,
+                        // Outras propriedades do CoachDTO, se necessário
+                    }
                 })
                 .FirstOrDefault();
 
@@ -100,9 +63,13 @@ namespace BallDo.Controllers
             {
                 return NotFound();
             }
+
             team.Name = updatedTeam.Name;
-            team.FoundedYear = updatedTeam.FoundedYear;
-            // Atualize outras propriedades conforme necessário
+            // Outras atualizações de propriedades, se necessário
+
+            // Atualize o treinador associado à equipe
+            team.Coach = updatedTeam.Coach;
+
             _context.SaveChanges();
             return NoContent();
         }

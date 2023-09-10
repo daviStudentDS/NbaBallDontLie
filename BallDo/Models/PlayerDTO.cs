@@ -2,9 +2,12 @@
 {
     public class PlayerDTO
     {
+        public int Id { get; set; }
         public string Name { get; set; }
-        // Outras propriedades do jogador que você deseja permitir na criação
-        public int? TeamId { get; set; } // ID do time (opcional)
+        public string Position { get; set; }
+        public int Age { get; set; }
+        public int GoalsScored { get; set; }
+        public TeamDTO Team { get; set; }
     }
 
 }

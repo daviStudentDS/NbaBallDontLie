@@ -24,17 +24,17 @@ namespace BallDo.Controllers
         public IActionResult GetAllPlayers()
         {
             var players = _context.Players
-                .Select(p => new
+                .Select(p => new PlayerDTO
                 {
-                    p.Id,
-                    p.Name,
-                    p.Age,
-                    p.Position,
-                    Team = new
+                    Id = p.Id,
+                    Name = p.Name,
+                    Position = p.Position,
+                    Age = p.Age,
+                    GoalsScored = p.GoalsScored,
+                    Team = new TeamDTO
                     {
-                        p.Team.Id,
-                        p.Team.Name,
-                        // Adicione outras propriedades da equipe, se necessário
+                        Id = p.Team.Id,
+                        Name = p.Team.Name
                     }
                 })
                 .ToList();
@@ -47,18 +47,14 @@ namespace BallDo.Controllers
         {
             var player = _context.Players
                 .Where(p => p.Id == id)
-                .Select(p => new
+                .Select(p => new PlayerDTO
                 {
-                    p.Id,
-                    p.Name,
-                    p.Age,
-                    p.Position,
-                    Team = new
-                    {
-                        p.Team.Id,
-                        p.Team.Name,
-                        // Adicione outras propriedades da equipe, se necessário
-                    }
+                    Id = p.Id,
+                    Name = p.Name,
+                    Position = p.Position,
+                    Age = p.Age,
+                    GoalsScored = p.GoalsScored,
+                   
                 })
                 .FirstOrDefault();
 

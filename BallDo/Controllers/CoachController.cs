@@ -46,16 +46,16 @@ namespace BallDo.Controllers
         {
             var coach = _context.Coachies
                 .Where(c => c.Id == id)
-                .Select(c => new
+                .Select(c => new CoachDTO
                 {
-                    c.Id,
-                    c.Name,
-                    c.ExperienceYears,
-                    Team = new
+                    Id = c.Id,
+                    Name = c.Name,
+                    ExperienceYears = c.ExperienceYears,
+                    Team = new TeamDTO
                     {
-                        c.Team.Id,
-                        c.Team.Name,
-                        // Adicione outras propriedades da equipe, se necessário
+                        Id = c.Team.Id,
+                        Name = c.Team.Name,
+                        // Outras propriedades do TeamDTO, se necessário
                     }
                 })
                 .FirstOrDefault();

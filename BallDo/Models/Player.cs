@@ -8,9 +8,11 @@ namespace BallDo.Models
         [Key]
         public int Id { get; set; }
 
+        [MaxLength(100)]
         [Required]
         public string Name { get; set; }
 
+        [MaxLength(100)]
         [Required]
         public string Position { get; set; }
 

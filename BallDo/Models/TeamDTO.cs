@@ -2,9 +2,10 @@
 {
     public class TeamDTO
     {
+        public int Id { get; set; }
         public string Name { get; set; }
-        // Outras propriedades do time que você deseja permitir na criação
-        public int? CoachId { get; set; } // ID do treinador (opcional)
+        public List<PlayerDTO> Players { get; set; }
+        public CoachDTO Coach { get; set; }
     }
 
 }
