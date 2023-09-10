@@ -17,7 +17,7 @@ namespace BallDo.Models
         public int FoundedYear { get; set; }
 
 
-        public IEnumerable<Player> Players { get; set; }
+        public IEnumerable<Player>? Players { get; set; }
 
         [Required]
         public int CoachId { get; set; }

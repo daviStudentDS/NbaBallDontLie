@@ -21,22 +21,61 @@ namespace BallDo.Controllers
         }
 
         [HttpGet]
-      /*  public async Task<IEnumerable<Team>> GetAllTeams()
+        public IActionResult GetAllTeams()
         {
-            var teams = await _context.Teams.Include(p => p.Players).Include(t => t.Coach).ToList();
-            return teams;
-        }*/
+            var teams = _context.Teams
+                .Select(t => new
+                {
+                    t.Id,
+                    t.Name,
+                    t.FoundedYear,
+                    Coach = new
+                    {
+                        t.Coach.Id,
+                        t.Coach.Name,
+                        // Adicione outras propriedades do treinador, se necessário
+                    },
+                    Players = t.Players.Select(p => new
+                    {
+                        p.Id,
+                        p.Name,
+                        p.Age,
+                        p.Position,
+                        // Adicione outras propriedades do jogador, se necessário
+                    }).ToList()
+                })
+                .ToList();
+
+            return Ok(teams);
+        }
 
         [HttpGet("{id}")]
         public IActionResult GetTeamById(int id)
         {
-            var team = _context.Teams.Select(t => new Team
-            {
-                Id = t.Id,
-                Name = t.Name,
-                Coach = t.Coach
+            var team = _context.Teams
+                .Where(t => t.Id == id)
+                .Select(t => new
+                {
+                    t.Id,
+                    t.Name,
+                    t.FoundedYear,
+                    Coach = new
+                    {
+                        t.Coach.Id,
+                        t.Coach.Name,
+                        // Adicione outras propriedades do treinador, se necessário
+                    },
+                    Players = t.Players.Select(p => new
+                    {
+                        p.Id,
+                        p.Name,
+                        p.Age,
+                        p.Position,
+                        // Adicione outras propriedades do jogador, se necessário
+                    }).ToList()
+                })
+                .FirstOrDefault();
 
-            }).FirstOrDefault(t => t.Id == id);
             if (team == null)
             {
                 return NotFound();
@@ -44,6 +83,7 @@ namespace BallDo.Controllers
 
             return Ok(team);
         }
+
         [HttpPost]
         public IActionResult CreateTeam(Team team)
         {
@@ -62,8 +102,7 @@ namespace BallDo.Controllers
             }
             team.Name = updatedTeam.Name;
             team.FoundedYear = updatedTeam.FoundedYear;
-            team.Players = updatedTeam.Players;
-            team.Coach = updatedTeam.Coach;
+            // Atualize outras propriedades conforme necessário
             _context.SaveChanges();
             return NoContent();
         }

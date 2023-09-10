@@ -23,14 +23,21 @@ namespace BallDo.Controllers
         [HttpGet]
         public IActionResult GetAllPlayers()
         {
-            var players = _context.Players.Select(p => new Player
-            {
-                Id = p.Id,
-                Name = p.Name,
-                Team = p.Team,
-                Age = p.Age,
-                Position = p.Position
-            }).ToList();
+            var players = _context.Players
+                .Select(p => new
+                {
+                    p.Id,
+                    p.Name,
+                    p.Age,
+                    p.Position,
+                    Team = new
+                    {
+                        p.Team.Id,
+                        p.Team.Name,
+                        // Adicione outras propriedades da equipe, se necessário
+                    }
+                })
+                .ToList();
 
             return Ok(players);
         }
@@ -38,14 +45,23 @@ namespace BallDo.Controllers
         [HttpGet("{id}")]
         public IActionResult GetPlayerById(int id)
         {
-            var player = _context.Players.Select(p => new Player
-            {
-                Id = p.Id,
-                Name = p.Name,
-                Team = p.Team,
-                Age = p.Age,
-                Position = p.Position
-            }).FirstOrDefault(p => p.Id == id);
+            var player = _context.Players
+                .Where(p => p.Id == id)
+                .Select(p => new
+                {
+                    p.Id,
+                    p.Name,
+                    p.Age,
+                    p.Position,
+                    Team = new
+                    {
+                        p.Team.Id,
+                        p.Team.Name,
+                        // Adicione outras propriedades da equipe, se necessário
+                    }
+                })
+                .FirstOrDefault();
+
             if (player == null)
             {
                 return NotFound();
@@ -74,6 +90,7 @@ namespace BallDo.Controllers
             player.Position = updatedPlayer.Position;
             player.Age = updatedPlayer.Age;
             player.GoalsScored = updatedPlayer.GoalsScored;
+            // Atualize outras propriedades conforme necessário
             _context.SaveChanges();
             return NoContent();
         }

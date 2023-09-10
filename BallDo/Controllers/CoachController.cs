@@ -19,28 +19,55 @@ namespace BallDo.Controllers
         {
             _context = context;
         }
-        
 
         [HttpGet]
-        public async Task<IEnumerable<Coach>> GetAllCoaches()
+        public IActionResult GetAllCoaches()
         {
-            var coaches = _context.Coachies.Include(c => c.Team);
-            return coaches;
+            var coaches = _context.Coachies
+                .Select(c => new
+                {
+                    c.Id,
+                    c.Name,
+                    c.ExperienceYears,
+                    Team = new
+                    {
+                        c.Team.Id,
+                        c.Team.Name,
+                        // Adicione outras propriedades da equipe, se necessário
+                    }
+                })
+                .ToList();
+
+            return Ok(coaches);
         }
 
         [HttpGet("{id}")]
         public IActionResult GetCoachById(int id)
         {
-            // Use Include para carregar as propriedades relacionadas, evitando ciclos de referência.
-            var coach = _context.Coachies.Include(c => c.Team).FirstOrDefault(c => c.Id == id);
+            var coach = _context.Coachies
+                .Where(c => c.Id == id)
+                .Select(c => new
+                {
+                    c.Id,
+                    c.Name,
+                    c.ExperienceYears,
+                    Team = new
+                    {
+                        c.Team.Id,
+                        c.Team.Name,
+                        // Adicione outras propriedades da equipe, se necessário
+                    }
+                })
+                .FirstOrDefault();
+
             if (coach == null)
-                if (coach == null)
             {
                 return NotFound();
             }
 
             return Ok(coach);
         }
+
         [HttpPost]
         public IActionResult CreateCoach(Coach coach)
         {
@@ -59,6 +86,7 @@ namespace BallDo.Controllers
             }
             coach.Name = updatedCoach.Name;
             coach.ExperienceYears = updatedCoach.ExperienceYears;
+            // Atualize outras propriedades conforme necessário
             _context.SaveChanges();
             return NoContent();
         }
