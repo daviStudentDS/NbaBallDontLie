@@ -17,7 +17,7 @@
 <img src= "https://github.com/daviStudentDS/NbaBallDontLie/assets/101807467/48d847f4-f746-44e5-8386-9536a4cfb017.png"/>
 # Team:
 <img src= "https://github.com/daviStudentDS/NbaBallDontLie/assets/101807467/30ce709b-4c6a-4662-8710-fc29ad79ff47.png"/>
-<img src= "https://github.com/daviStudentDS/NbaBallDontLie/assets/101807467/48d847f4-f746-44e5-8386-9536a4cfb017.png"/>
+<img src= "https://github.com/daviStudentDS/NbaBallDontLie/assets/101807467/b5c05ced-a7e2-4856-9e61-69bca5c738b8.png"/>
 
 # Modelo de Entidade e Relacionamento(MER) API que será criada:
 
