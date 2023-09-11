@@ -12,7 +12,7 @@
 # Player:
 <img src= "https://github.com/daviStudentDS/NbaBallDontLie/assets/101807467/32b26ada-3265-4beb-9eb5-5627524acbd9.png"/>
 # Team:
-<img src= ".png"/>
+<img src= "https://github.com/daviStudentDS/NbaBallDontLie/assets/101807467/30ce709b-4c6a-4662-8710-fc29ad79ff47.png"/>
 
 # Modelo de Entidade e Relacionamento(MER) API que será criada:
 
