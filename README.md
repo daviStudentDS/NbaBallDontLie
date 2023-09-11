@@ -10,9 +10,9 @@
 # Coach:
 <img src= "https://github.com/daviStudentDS/NbaBallDontLie/assets/101807467/3dbf7caa-8150-4714-8c8b-d383f5b7ae0e.png"/>
 # Player:
-<img src= "https://github.com/daviStudentDS/NbaBallDontLie/assets/101807467/3dbf7caa-8150-4714-8c8b-d383f5b7ae0e.png"/>
-# Coach:
-<img src= "https://github.com/daviStudentDS/NbaBallDontLie/assets/101807467/3dbf7caa-8150-4714-8c8b-d383f5b7ae0e.png"/>
+<img src= "https://github.com/daviStudentDS/NbaBallDontLie/assets/101807467/32b26ada-3265-4beb-9eb5-5627524acbd9.png"/>
+# Team:
+<img src= ".png"/>
 
 # Modelo de Entidade e Relacionamento(MER) API que será criada:
 
