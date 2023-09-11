@@ -13,11 +13,15 @@
 <img src="https://github.com/daviStudentDS/NbaBallDontLie/assets/101807467/25b514b4-34c3-43b7-830d-0caa52be839b"/>
 <br>
 <br>
+
+
 # Player:
 <img src= "https://github.com/daviStudentDS/NbaBallDontLie/assets/101807467/32b26ada-3265-4beb-9eb5-5627524acbd9.png"/>
 <img src= "https://github.com/daviStudentDS/NbaBallDontLie/assets/101807467/48d847f4-f746-44e5-8386-9536a4cfb017.png"/>
 <br>
 <br>
+
+
 # Team:
 <img src= "https://github.com/daviStudentDS/NbaBallDontLie/assets/101807467/30ce709b-4c6a-4662-8710-fc29ad79ff47.png"/>
 <img src= "https://github.com/daviStudentDS/NbaBallDontLie/assets/101807467/b5c05ced-a7e2-4856-9e61-69bca5c738b8.png"/>
