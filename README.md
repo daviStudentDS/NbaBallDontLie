@@ -6,7 +6,7 @@
 - Descrição da nossa API: Assim como a api externa, ela armazenará dados sobre times e jogadores de times diferentes e será possível efetuar a pesquissa de seus dados no app;
 - Alterações: Acredito que além das activitys e provavelmente a mecânica da imagem aleatória, não seja alterado muitas coisas no aplicativo.
 
-# API BallDo - Localizada na Branch Api_Change:
+# API BallDo - Localizada na Branch Api_Change
 # Coach:
 <img src= "https://github.com/daviStudentDS/NbaBallDontLie/assets/101807467/3dbf7caa-8150-4714-8c8b-d383f5b7ae0e.png"/>
 # Player:
