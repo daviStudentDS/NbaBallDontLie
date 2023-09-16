@@ -12,7 +12,7 @@ namespace BallDo.Models
         public string Name { get; set; }
 
       //  public int TeamId { get; set; }
-        public Team Team { get; set; }
+        public Team? Team { get; set; }
 
         public int ExperienceYears { get; set; }
     }

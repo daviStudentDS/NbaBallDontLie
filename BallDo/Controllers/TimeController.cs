@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using BallDo.Data;
 using BallDo.Models;
+using System.ComponentModel.DataAnnotations;
 
 namespace BallDo.Controllers
 {
@@ -48,11 +49,32 @@ namespace BallDo.Controllers
         }
 
         [HttpPost]
-        public IActionResult CreateTeam(Team team)
+        public IActionResult CreateTeam(TeamDTO teamDTO)
         {
-            _context.Teams.Add(team);
-            _context.SaveChanges();
-            return CreatedAtAction(nameof(GetTeamById), new { id = team.Id }, team);
+            if (ModelState.IsValid)
+            {
+                // Mapeie PlayersDTO para Players
+                var players = teamDTO.Players?.Select(playerDTO => new Player
+                {
+                    // Mapeie as propriedades do PlayerDTO aqui.
+                    // Exemplo: Name = playerDTO.Name,
+                }).ToList();
+
+                // Crie o objeto Team com as propriedades mapeadas
+                var team = new Team
+                {
+                    Name = teamDTO.Name,
+                    Players = (IEnumerable<Player>)teamDTO.Players,
+                    
+                };
+
+                _context.Teams.Add(team);
+                _context.SaveChanges();
+                return CreatedAtAction(nameof(GetTeamById), new { id = team.Id }, team);
+            }
+
+            // Se o modelo não for válido, retorne um BadRequest com os erros de validação.
+            return BadRequest(ModelState);
         }
 
         [HttpPut("{id}")]
