@@ -8,7 +8,7 @@ namespace BallDo.Data
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options) { }
 
-        public DbSet<Coach> Coachies { get; set; }
+        public DbSet<Coach> Coaches { get; set; }
         public DbSet<Player> Players { get; set; }
         public DbSet<Team> Teams { get; set; }
 
@@ -16,24 +16,14 @@ namespace BallDo.Data
         {
             modelBuilder.Entity<Player>()
                 .HasOne(a => a.Team)
-                .WithMany(b => b.Players)
+                .WithMany()
                 .HasForeignKey(a => a.TeamId);
 
             modelBuilder.Entity<Coach>()
                 .HasOne(a => a.Team)
-                .WithOne(b => b.Coach)
-                .HasForeignKey<Team>(a => a.CoachId);
+                .WithMany()
+                .HasForeignKey(a => a.TeamId);
         }
     }
 }
-
-        // modelBuilder.Entity<PokeTeamModel>()
-        //     .HasOne(a => a.User)
-        //     .WithMany(b => b.PokeTeams)
-        //     .HasForeignKey(a => a.UserId);
-
-        // modelBuilder.Entity<FavoritePokemonModel>()
-        //     .HasOne(a => a.User)
-        //     .WithMany(b => b.FavoritePokemons)
-        //     .HasForeignKey(a => a.UserId);
     

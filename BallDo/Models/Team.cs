@@ -7,37 +7,7 @@ namespace BallDo.Models
 {
     public class Team
     {
-        [Key]
         public int Id { get; set; }
-
-        [Required]
         public string Name { get; set; }
-
-        [Required]
-        public int FoundedYear { get; set; }
-
-
-        public IEnumerable<Player>? Players { get; set; }
-
-        [ForeignKey("Coach")]
-        public int CoachId { get; set; }
-        public Coach? Coach { get; set; }
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 }

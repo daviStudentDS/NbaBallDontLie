@@ -7,7 +7,7 @@
         public string Position { get; set; }
         public int Age { get; set; }
         public int GoalsScored { get; set; }
-        public TeamDTO Team { get; set; }
+        public int? TeamId { get; set; }
+        public Team Team { get; set; }
     }
-
 }

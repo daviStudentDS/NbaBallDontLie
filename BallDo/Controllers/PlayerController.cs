@@ -20,74 +20,73 @@ namespace BallDo.Controllers
             _context = context;
         }
 
-        [HttpGet]
-        public IActionResult GetAllPlayers()
-        {
-            var players = _context.Players
-                .Select(p => new PlayerDTO
-                {
-                    Id = p.Id,
-                    Name = p.Name,
-                    Position = p.Position,
-                    Age = p.Age,
-                    GoalsScored = p.GoalsScored,
-                    Team = new TeamDTO
-                    {
-                        Id = p.Team.Id,
-                        Name = p.Team.Name
-                    }
-                })
-                .ToList();
-
-            return Ok(players);
-        }
-
         [HttpGet("{id}")]
-        public IActionResult GetPlayerById(int id)
-        {
-            var player = _context.Players
-                .Where(p => p.Id == id)
-                .Select(p => new PlayerDTO
-                {
-                    Id = p.Id,
-                    Name = p.Name,
-                    Position = p.Position,
-                    Age = p.Age,
-                    GoalsScored = p.GoalsScored,
-                   
-                })
-                .FirstOrDefault();
-
-            if (player == null)
-            {
-                return NotFound();
-            }
-
-            return Ok(player);
-        }
-
-        [HttpPost]
-        public IActionResult CreatePlayer(Player player)
-        {
-            _context.Players.Add(player);
-            _context.SaveChanges();
-            return CreatedAtAction(nameof(GetPlayerById), new { id = player.Id }, player);
-        }
-
-        [HttpPut("{id}")]
-        public IActionResult UpdatePlayer(int id, Player updatedPlayer)
+        public IActionResult GetPlayer(int id)
         {
             var player = _context.Players.FirstOrDefault(p => p.Id == id);
             if (player == null)
             {
                 return NotFound();
             }
-            player.Name = updatedPlayer.Name;
-            player.Position = updatedPlayer.Position;
-            player.Age = updatedPlayer.Age;
-            player.GoalsScored = updatedPlayer.GoalsScored;
-            // Atualize outras propriedades conforme necessário
+
+            var playerDTO = new PlayerDTO
+            {
+                Id = player.Id,
+                Name = player.Name,
+                Position = player.Position,
+                Age = player.Age,
+                GoalsScored = player.GoalsScored,
+                TeamId = player.TeamId
+            };
+
+            return Ok(playerDTO);
+        }
+
+        [HttpPost]
+        public IActionResult CreatePlayer(PlayerDTO playerDTO)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var player = new Player
+            {
+                Name = playerDTO.Name,
+                Position = playerDTO.Position,
+                Age = playerDTO.Age,
+                GoalsScored = playerDTO.GoalsScored,
+                TeamId = playerDTO.TeamId ?? 0
+            };
+
+            _context.Players.Add(player);
             _context.SaveChanges();
+
+            return CreatedAtAction(nameof(GetPlayer), new { id = player.Id }, player);
+        }
+
+        [HttpPut("{id}")]
+        public IActionResult UpdatePlayer(int id, PlayerDTO playerDTO)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var player = _context.Players.FirstOrDefault(p => p.Id == id);
+            if (player == null)
+            {
+                return NotFound();
+            }
+
+            player.Name = playerDTO.Name;
+            player.Position = playerDTO.Position;
+            player.Age = playerDTO.Age;
+            player.GoalsScored = playerDTO.GoalsScored;
+            player.TeamId = playerDTO.TeamId ?? 0;
+
+            _context.SaveChanges();
+
             return NoContent();
         }
 
@@ -99,8 +98,10 @@ namespace BallDo.Controllers
             {
                 return NotFound();
             }
+
             _context.Players.Remove(player);
             _context.SaveChanges();
+
             return NoContent();
         }
     }
