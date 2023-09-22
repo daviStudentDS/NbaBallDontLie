@@ -1,7 +1,5 @@
 package com.example.ballbask.request;
 
-import android.util.Log;
-
 import com.example.ballbask.model.Player;
 import com.example.ballbask.model.Team;
 import com.example.ballbask.model.Treinador;
@@ -12,9 +10,8 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
-public class BallDontLie {
-
-    private static final String BASE_URL = "https://www.balldontlie.io/api/v1/";
+public class Balldo {
+    private static final String BASE_URL = "link da api";
 
     public static ArrayList<Team> getTeams() throws Exception {
         JSONArray response = RequestApi.get(BASE_URL + "teams").getJSONArray("data");
@@ -50,19 +47,17 @@ public class BallDontLie {
         return teams;
     }
 
-    public static Player getPlayerById(int playerId) throws Exception{
+    public static Treinador getTreinadorById(int playerId) throws Exception{
         JSONObject json = RequestApi.get(BASE_URL + "players/" + playerId);
 
         int id = json.getInt("id");
-        String firstName = json.getString("first_name");
-        String lastName = json.getString("last_name");
-        String position = json.getString("position");
+        String Name = json.getString("name");
+        int ExperienceYears = json.getInt("ExperienceYears");
         int teamId = json.getJSONObject("team").getInt("id");
-
-        return new Player(id, firstName, lastName, position, teamId);
+        return new Treinador(id, Name, ExperienceYears, teamId);
     }
     public static List<Player> searchPlayers(int playerId) throws Exception {
-      //   JSONArray response = RequestApi.get(BASE_URL + "players/" + playerId);
+        //   JSONArray response = RequestApi.get(BASE_URL + "players/" + playerId);
         List<Player> players = new ArrayList<>();
         return players;
 //
@@ -81,17 +76,5 @@ public class BallDontLie {
 //        }
 
     }
-
-    public static Treinador getTreinadorById(int treinadorId) {
-        return null;
-    }
 }
-
-
-
-
-
-
-
-
 

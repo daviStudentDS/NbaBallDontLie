@@ -24,7 +24,7 @@ public class HistoryActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         listView = findViewById(R.id.listView);
-        adapter = new ArrayAdapter<>(this, R.layout.activity_history, R.id.textView, playerFullName);
+        adapter = new ArrayAdapter<>(this, R.layout.activity_history, R.id.textViewTeamName, playerFullName);
         listView.setAdapter(adapter);
 
         populateHistory();

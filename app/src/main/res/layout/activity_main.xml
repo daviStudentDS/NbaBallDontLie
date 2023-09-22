@@ -8,78 +8,69 @@
     tools:context=".MainActivity">
 
 
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="359dp"
-        android:layout_height="80dp"
-        android:layout_marginStart="120dp"
-        android:layout_marginTop="45dp"
-        android:layout_marginEnd="120dp"
-        android:layout_marginBottom="650dp"
-        android:text="AQUI VOCÊ ENCONTRA A NBA!"
-        android:textAlignment="center"
-        android:textSize="30dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-
-        />
-
     <Button
         android:id="@+id/btnPlayer"
-        android:layout_width="312dp"
-        android:layout_height="99dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginBottom="16dp"
+        android:layout_width="304dp"
+        android:layout_height="105dp"
+        android:layout_marginTop="200dp"
+        android:backgroundTint="#EE1649"
         android:fontFamily="arial"
         android:lineBreakStyle="normal"
         android:onClick="Pass1"
         android:text="Player"
         android:textSize="50dp"
-        app:layout_constraintBottom_toTopOf="@+id/btnTeam"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.493"
+        app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView"
+        app:layout_constraintTop_toTopOf="parent"
         tools:ignore="MissingConstraints" />
 
     <Button
         android:id="@+id/btnTeam"
         android:layout_width="304dp"
         android:layout_height="105dp"
-        android:layout_marginTop="-150dp"
-        android:layout_marginBottom="89dp"
+        android:backgroundTint="#0E6BB4"
         android:fontFamily="arial"
         android:lineBreakStyle="normal"
         android:onClick="Pass2"
         android:text="Times"
         android:textSize="50dp"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btnPlayer"
-        app:layout_constraintVertical_bias="1.0"
         tools:ignore="MissingConstraints" />
 
     <Button
         android:id="@+id/btnHistory"
         android:layout_width="304dp"
         android:layout_height="105dp"
-        android:layout_marginTop="44dp"
-        android:layout_marginBottom="89dp"
+        android:backgroundTint="#EE1649"
         android:fontFamily="arial"
         android:lineBreakStyle="normal"
         android:onClick="Pass3"
         android:text="Histórico"
         android:textSize="50dp"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintVertical_bias="0.007"
         app:layout_constraintTop_toBottomOf="@+id/btnTeam"
         tools:ignore="" />
+
+    <ImageView
+        android:id="@+id/imageView3"
+        android:layout_width="425dp"
+        android:layout_height="244dp"
+        app:srcCompat="@drawable/vector_1"
+        tools:layout_editor_absoluteX="-7dp"
+        tools:layout_editor_absoluteY="502dp" />
+
+    <ImageView
+        android:id="@+id/imageView4"
+        android:layout_width="425dp"
+        android:layout_height="244dp"
+        app:srcCompat="@drawable/vector_2"
+        tools:layout_editor_absoluteX="-6dp"
+        tools:layout_editor_absoluteY="-61dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
