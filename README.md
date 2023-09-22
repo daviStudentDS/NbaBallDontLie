@@ -8,6 +8,40 @@
 
 # API BallDo - Localizada na Branch Api_Change
 
+# Script do banco de dados:
+
+create database dbmyballdo;
+FK_Coaches_Teams_TeamIduse dbmyballdo;
+
+-- Criação da tabela Team
+CREATE TABLE Team (
+    Id INT PRIMARY KEY AUTO_INCREMENT,
+    Name VARCHAR(255) NOT NULL
+);
+
+-- Criação da tabela Coach
+CREATE TABLE Coach (
+    Id INT PRIMARY KEY AUTO_INCREMENT,
+    Name VARCHAR(255) NOT NULL,
+    ExperienceYears INT,
+    TeamId INT,
+    FOREIGN KEY (TeamId) REFERENCES Team(Id)
+);
+
+-- Criação da tabela Player
+CREATE TABLE Player (
+    Id INT PRIMARY KEY AUTO_INCREMENT,
+    Name VARCHAR(255) NOT NULL,
+    Position VARCHAR(100),
+    Age INT,
+    GoalsScored INT,
+    TeamId INT,
+    FOREIGN KEY (TeamId) REFERENCES Team(Id)
+);
+
+
+SELECT * FROM players;
+
 # Coach:
 <img src= "https://github.com/daviStudentDS/NbaBallDontLie/assets/101807467/3dbf7caa-8150-4714-8c8b-d383f5b7ae0e.png"/>
 <img src="https://github.com/daviStudentDS/NbaBallDontLie/assets/101807467/25b514b4-34c3-43b7-830d-0caa52be839b"/>
